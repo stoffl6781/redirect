@@ -1,4 +1,4 @@
-# Redirect PHP and CSV based
+# URL redirection with PHP and a CSV file
 
 With this PHP code URLS can easily be redirected. This applies to book printing when sources change.
 
