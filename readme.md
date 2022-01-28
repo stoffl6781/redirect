@@ -22,7 +22,7 @@ To configure the URLS and paths, modify the url.csv file
 
 In the index.php the entries are checked and compared with the url.csv to see if it exists.
 If there is no entry, you could be redirected to a domain here.
-Furthermore, a log file is written that saves all entries.
+Furthermore, a log file is written that saves all entries. The Roation per default is 15 days.
 
 ## url.csv
 
