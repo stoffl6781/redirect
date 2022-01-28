@@ -36,12 +36,34 @@ function Redirect($url, $permanent = false)
 
 function WriteToLog() 
 {
+    $logfilestokeep = 1;
+    $logfile = 'log.txt';
+
+    LogRotation($logfilestokeep, $logfile);
 
     $date = new DateTime();
-    $date = $date->format("y.m.d h:i:s");
-    if (!file_exists('log.txt')) {
-        touch('log.txt');
-    } else {
-        file_put_contents('log.txt', PHP_EOL . $date .': '. htmlentities($_GET['id']), FILE_APPEND);
+    $date = $date->format("y-m-d h:i:s");
+    if (!file_exists($logfile)) {
+        touch($logfile);
+    }
+
+    file_put_contents($logfile, PHP_EOL . $date .': '. htmlentities($_GET['id']), FILE_APPEND);
+}
+
+function LogRotation($logfilestokeep, $logfile) 
+{
+    if (file_exists($logfile)) {
+        if (date ("Y-m-d", filemtime($logfile)) !== date('Y-m-d')) {
+            if (file_exists($logfile . "." . $logfile)) {
+                unlink($logfile . "." . $logfile);
+            }
+            for ($i = $logfilestokeep; $i > 0; $i--) {
+                if (file_exists($logfile . "." . $i)) {
+                    $next = $i+1;
+                    rename($logfile . "." . $i, $logfile . "." . $next);
+                }
+            }
+            rename($logfile, $logfile . ".1");
+        }
     }
 }
